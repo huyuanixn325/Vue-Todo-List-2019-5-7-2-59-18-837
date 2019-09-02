@@ -4,18 +4,20 @@
     <h2>Jquery To Do List</h2>
     <h3>Simple Todo List with adding and filter by diff status.</h3>
       <p>
-        <label for="new-todo">Add a todo</label><input id="new-todo" v-model="newTodoText"><button>add</button>
+        <label for="new-todo">Add a todo</label><input id="new-todo" v-model="newTodoText"><button @click="addTodo">add</button>
       </p>
       <ul>
     <li
-      v-for="(todo, index) in todos"
+      v-for="(todo) in todos"
       v-bind:key="todo.id"
-      v-bind:title="todo.title"
-      v-on:remove="todos.splice(index, 1)"
-    ><input type="checkbox" id="todo.id" v-model="todo.checked">
-{{todo.title}}</li>
+      v-bind:title="todo.title">
+      <input type="checkbox" id="todo.id" v-model="todo.checked">
+      
+    
+    <span>{{todo.title}}</span>
+    </li>
   </ul>
-    <p><button>all</button><button>Active</button><button>Complete</button></p>
+    <p><button>all</button><button >Active</button><button>Complete</button></p>
 
   </div>
 </template>
@@ -32,24 +34,17 @@ export default {
        newTodoText: '',
        toggle:false,
        todos:[
-         {
-        id: 1,
-        title: 'Do the dishes',
-        checked:false
-      },
-      {
-        id: 2,
-        title: 'Take out the trash',
-         checked:false
-      },
-      {
-        id: 3,
-        title: 'Mow the lawn',
-         checked:false
-      }
+       
        ],
-         nextTodoId: 4
+         nextTodoId: 1
     }
+  },methods:{
+    addTodo:function(){
+      this.todos.push({id:this.nextTodoId,title:this.newTodoText,checked:false})
+      this.nextTodoId=this.nextTodoId+1;
+    },
+    
+   
   }
 }
 </script>
@@ -69,5 +64,8 @@ ul{
   margin:0 auto;
  display:block;
  padding:0px;
+}
+.checked{
+  text-decoration:line-through;
 }
 </style>
