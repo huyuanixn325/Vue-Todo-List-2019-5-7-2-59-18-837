@@ -17,7 +17,7 @@
     <span v-else>{{todo.title}}</span>
     </li>
   </ul>
-    <p><button @click="allClick">all</button><button >Active</button><button>Complete</button></p>
+    <p><button @click="allClick">all</button><button @click="activeTodo">Active</button><button @click="completeTodo">Complete</button></p>
 
   </div>
 </template>
@@ -36,11 +36,13 @@ export default {
        todos:[
        
        ],
-         nextTodoId: 1
+         nextTodoId: 1,
+         todoAll:[]
     }
   },methods:{
     addTodo:function(){
       this.todos.push({id:this.nextTodoId,title:this.newTodoText,checked:false})
+      this.todoAll = this.todos;
       this.nextTodoId=this.nextTodoId+1;
     },
     changeTodo:function(option){
@@ -53,10 +55,28 @@ export default {
        }
      });
     },
-    allClick(){
-      var tempObj = this.todos;
+    allClick:function(){
+      this.todos = this.todoAll;
+    },
+    activeTodo:function(){
+      var tempObj=[];
+      this.todoAll.forEach(element=>{
+        if(element.checked==false){
+          tempObj.push(element);
+        }
+      })
       this.todos = tempObj;
+    },
+    completeTodo:function(){
+      var tempObj=[];
+      this.todoAll.forEach(element=>{
+        if(element.checked==true){
+          tempObj.push(element);
+        }
+      })
+      this.todos=tempObj;
     }
+
   }
 }
 </script>
