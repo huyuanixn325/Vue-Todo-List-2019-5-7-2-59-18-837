@@ -11,13 +11,13 @@
       v-for="(todo) in todos"
       v-bind:key="todo.id"
       v-bind:title="todo.title">
-      <input type="checkbox" id="todo.id" v-model="todo.checked">
+      <input type="checkbox" id="todo.id" v-model="todo.checked" @change="changeTodo(todo)">
       
-    
-    <span>{{todo.title}}</span>
+    <span v-if="todo.checked==true" class="checked">{{todo.title}}</span>
+    <span v-else>{{todo.title}}</span>
     </li>
   </ul>
-    <p><button>all</button><button >Active</button><button>Complete</button></p>
+    <p><button @click="allClick">all</button><button >Active</button><button>Complete</button></p>
 
   </div>
 </template>
@@ -43,8 +43,20 @@ export default {
       this.todos.push({id:this.nextTodoId,title:this.newTodoText,checked:false})
       this.nextTodoId=this.nextTodoId+1;
     },
-    
-   
+    changeTodo:function(option){
+     this.todos.forEach(element => {
+       if(element.id==option.id){
+         var newObj={};
+         newObj.id = element.id;
+         newObj.title = element.title;
+         newObj.checked=!element.checked;
+       }
+     });
+    },
+    allClick(){
+      var tempObj = this.todos;
+      this.todos = tempObj;
+    }
   }
 }
 </script>
